@@ -1,0 +1,6 @@
+[database]
+Server=localhost
+Database=CynthiaMini
+OSAuthent=True
+UserName=
+Password=

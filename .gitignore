@@ -1,0 +1,13 @@
+# Локальная конфигурация и результаты сборки
+config.ini
+*.local
+*.dcu
+*.dll
+*.exe
+*.map
+Win32/
+Win64/
+__history/
+.idea/
+.vs/
+

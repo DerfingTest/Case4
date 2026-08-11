@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Cynthia Mini — учебный сайт для ведения вакансий, кандидатов и этапов подбора персонала.">
+  <title>Cynthia Mini — сайт подбора персонала</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#" data-goto="dashboard" aria-label="Cynthia Mini — главная">
+      <span class="brand-mark">CM</span>
+      <span>Cynthia Mini<small>сайт отдела подбора</small></span>
+    </a>
+    <nav class="site-nav" aria-label="Основная навигация">
+      <button class="nav active" data-page="dashboard">Главная</button>
+      <button class="nav" data-page="vacancies">Вакансии</button>
+      <button class="nav" data-page="candidates">Кандидаты</button>
+      <button class="nav" data-page="pipeline">Воронка</button>
+    </nav>
+    <div class="user"><span class="avatar">АД</span><span>Анна Демина<small>рекрутер</small></span></div>
+  </header>
+
+  <main>
+    <div id="notice" aria-live="polite"></div>
+
+    <section id="dashboard" class="page active">
+      <div class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Сайт управления подбором</p>
+          <h1>Люди и вакансии<br>в одном месте</h1>
+          <p class="lead">Cynthia Mini помогает небольшой компании вести базу кандидатов, контролировать открытые вакансии и видеть движение по этапам найма.</p>
+          <div class="hero-actions">
+            <button class="primary" data-goto="vacancies">Смотреть вакансии</button>
+            <button class="secondary" id="quick-add">Добавить кандидата</button>
+          </div>
+        </div>
+        <div class="hero-card" aria-label="Краткая информация о сайте">
+          <span>Рабочий день</span><strong>Подбор под контролем</strong>
+          <p>Данные сайта загружаются из MS SQL Server через Delphi WEB API.</p>
+        </div>
+      </div>
+
+      <div class="section-heading"><div><p class="eyebrow">Сводка</p><h2>Текущая ситуация</h2></div><p>Показатели обновляются по данным сайта.</p></div>
+      <div class="metrics">
+        <article><span>Открытые вакансии</span><strong id="m-open">—</strong><small>активный подбор</small></article>
+        <article><span>Кандидаты</span><strong id="m-candidates">—</strong><small>в общей базе</small></article>
+        <article><span>Интервью</span><strong id="m-interviews">—</strong><small>на текущем этапе</small></article>
+        <article><span>Наняты</span><strong id="m-hired">—</strong><small>успешно завершены</small></article>
+      </div>
+
+      <div class="home-grid">
+        <section class="panel"><div class="panel-head"><div><p class="eyebrow">Процесс</p><h3>Воронка подбора</h3></div><button class="text-link" data-goto="pipeline">Открыть →</button></div><div id="mini-pipeline" class="bars"></div></section>
+        <aside class="about-card"><p class="eyebrow">Возможности сайта</p><h3>Простой набор инструментов HR</h3><ul><li>единый список вакансий;</li><li>контактная база кандидатов;</li><li>поиск без перезагрузки;</li><li>контроль этапов найма;</li><li>добавление новых записей.</li></ul></aside>
+      </div>
+    </section>
+
+    <section id="vacancies" class="page inner-page">
+      <div class="page-intro"><div><p class="eyebrow">Раздел сайта</p><h1>Вакансии компании</h1><p>Открытые и завершённые позиции, отделы, города и зарплатные диапазоны.</p></div><button class="primary" data-modal="vacancy">+ Новая вакансия</button></div>
+      <div class="toolbar"><input id="vacancy-search" placeholder="Поиск по вакансии, отделу или городу" aria-label="Поиск вакансий"></div>
+      <div class="panel table-wrap"><table><thead><tr><th>Вакансия</th><th>Отдел</th><th>Локация</th><th>Зарплата</th><th>Кандидаты</th><th>Статус</th></tr></thead><tbody id="vacancies-body"></tbody></table></div>
+    </section>
+
+    <section id="candidates" class="page inner-page">
+      <div class="page-intro"><div><p class="eyebrow">Раздел сайта</p><h1>База кандидатов</h1><p>Контакты, город, выбранная вакансия, этап и оценка кандидата.</p></div><button class="primary" data-modal="candidate">+ Новый кандидат</button></div>
+      <div class="toolbar"><input id="candidate-search" placeholder="Поиск по имени, городу или вакансии" aria-label="Поиск кандидатов"></div>
+      <div class="panel table-wrap"><table><thead><tr><th>Кандидат</th><th>Контакты</th><th>Город</th><th>Вакансия</th><th>Этап</th><th>Рейтинг</th></tr></thead><tbody id="candidates-body"></tbody></table></div>
+    </section>
+
+    <section id="pipeline" class="page inner-page">
+      <div class="page-intro"><div><p class="eyebrow">Раздел сайта</p><h1>Воронка подбора</h1><p>Кандидаты распределены от нового отклика до найма или отказа.</p></div><button class="primary" data-modal="application">+ Добавить в воронку</button></div>
+      <div class="kanban" id="kanban"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><span>© 2026 Cynthia Mini</span><span>Учебный сайт на Delphi 10.2, IIS и MS SQL Server</span></footer>
+
+  <dialog id="modal">
+    <form id="entity-form"><div class="modal-head"><div><p class="eyebrow">Новая запись</p><h2 id="modal-title">Добавить</h2></div><button type="button" class="icon" id="close-modal" aria-label="Закрыть">×</button></div><div id="form-fields"></div><div class="modal-actions"><button type="button" class="secondary" id="cancel-modal">Отмена</button><button type="submit" class="primary">Сохранить</button></div></form>
+  </dialog>
+  <script src="app.js"></script>
+</body>
+</html>

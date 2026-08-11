@@ -1,0 +1,10 @@
+Win32/
+Win64/
+__history/
+*.dcu
+*.local
+*.identcache
+*.res
+config.ini
+*.dll
+*.map
