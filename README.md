@@ -33,7 +33,6 @@
 - ограничения `CHECK`, уникальные ограничения и индексы;
 - демонстрационные данные и представление для отчётов;
 - отчёт в формате DOCX.
-- скриншот демонстрации результата.
 
 Основной SQL-файл: [`case-3-tourism/tourism_rare_events.sql`](case-3-tourism/tourism_rare_events.sql).
 
@@ -47,7 +46,7 @@
 - браузерный интерфейс со сводной панелью, списками и воронкой подбора;
 - SQL-скрипт создания и наполнения базы данных;
 - отчёт и инструкция по запуску.
-- скриншот главной страницы сайта.
+- пять скриншотов основных разделов сайта.
 
 Инструкция по сборке и публикации: [`case-4-cynthia-mini/README.md`](case-4-cynthia-mini/README.md).
 
@@ -81,14 +80,13 @@ Case4/
 ├── case-3-tourism/
 │   ├── tourism_rare_events.sql
 │   ├── schema.md
-│   ├── screenshot.png
 │   └── report/
 ├── case-4-cynthia-mini/
 │   ├── CynthiaMini.dpr
 │   ├── database/
 │   ├── src/
 │   ├── www/
-│   ├── screenshot.png
+│   ├── screenshot-*.png
 │   └── report/
 └── case-5-analytical-review/
     ├── README.md

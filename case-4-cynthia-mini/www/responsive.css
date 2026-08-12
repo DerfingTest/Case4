@@ -1,0 +1,32 @@
+@media (max-width: 1300px) {
+  .user {
+    display: none;
+  }
+
+  .site-header {
+    gap: 16px;
+  }
+
+  .nav {
+    padding: 9px 10px;
+  }
+
+  .table-wrap table {
+    min-width: 0;
+    table-layout: fixed;
+  }
+
+  th,
+  td {
+    padding: 12px 10px;
+  }
+
+  .kanban {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    overflow: visible;
+  }
+
+  .column {
+    min-height: 220px;
+  }
+}
