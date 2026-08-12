@@ -1,5 +1,5 @@
 def sum_negative_between_min_max(numbers):
-    """Возвращает сумму отрицательных элементов между min и max."""
+    """Складывает отрицательные числа, стоящие между минимумом и максимумом."""
     min_index = numbers.index(min(numbers))
     max_index = numbers.index(max(numbers))
 

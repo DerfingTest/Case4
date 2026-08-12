@@ -1,6 +1,5 @@
--- Кейс-задача № 3. База данных «Туризм».
--- Концепция: агентство экспедиций к редким природным явлениям.
--- СУБД: MySQL 8.0.16+.
+-- Учебная база для агентства, которое организует поездки к редким природным явлениям.
+-- Скрипт рассчитан на MySQL 8.0.16 и более новые версии.
 
 CREATE DATABASE IF NOT EXISTS tourism_rare_events
   CHARACTER SET utf8mb4
@@ -8,7 +7,7 @@ CREATE DATABASE IF NOT EXISTS tourism_rare_events
 
 USE tourism_rare_events;
 
--- Справочник 1. Туристические направления.
+-- Здесь собраны места, куда можно отправиться, и явления, которые там наблюдают.
 CREATE TABLE IF NOT EXISTS destinations (
     destination_id      INT UNSIGNED NOT NULL AUTO_INCREMENT,
     destination_name    VARCHAR(120) NOT NULL,
@@ -25,7 +24,7 @@ CREATE TABLE IF NOT EXISTS destinations (
     CHECK (longitude IS NULL OR longitude BETWEEN -180 AND 180)
 ) ENGINE=InnoDB;
 
--- Справочник 2. Темы и форматы туров.
+-- Здесь описаны форматы путешествий: их сложность, длительность и размер группы.
 CREATE TABLE IF NOT EXISTS tour_themes (
     theme_id            SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
     theme_name          VARCHAR(100) NOT NULL,
@@ -41,7 +40,7 @@ CREATE TABLE IF NOT EXISTS tour_themes (
     CHECK (max_group_size BETWEEN 1 AND 40)
 ) ENGINE=InnoDB;
 
--- Справочник 3. Пакеты предоставляемых услуг.
+-- В этой таблице видно, что входит в каждый пакет услуг и сколько он стоит.
 CREATE TABLE IF NOT EXISTS service_packages (
     service_package_id  SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
     package_name        VARCHAR(100) NOT NULL,
@@ -55,7 +54,7 @@ CREATE TABLE IF NOT EXISTS service_packages (
     CHECK (price_per_person >= 0)
 ) ENGINE=InnoDB;
 
--- Справочник 4. Клиенты агентства.
+-- Контактные данные путешественников, для которых оформляются поездки.
 CREATE TABLE IF NOT EXISTS travelers (
     traveler_id         INT UNSIGNED NOT NULL AUTO_INCREMENT,
     full_name           VARCHAR(150) NOT NULL,
@@ -70,7 +69,7 @@ CREATE TABLE IF NOT EXISTS travelers (
     UNIQUE KEY uq_travelers_passport (passport_number)
 ) ENGINE=InnoDB;
 
--- Таблица переменной информации. Заказы туров.
+-- Каждый заказ связывает клиента, направление, формат тура и выбранный пакет услуг.
 CREATE TABLE IF NOT EXISTS tour_orders (
     order_id                BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
     booking_code            CHAR(10) NOT NULL,
@@ -119,7 +118,7 @@ CREATE TABLE IF NOT EXISTS tour_orders (
     CHECK (discount_percent BETWEEN 0 AND 40)
 ) ENGINE=InnoDB;
 
--- Демонстрационные данные справочников.
+-- Добавляем данные, на которых можно сразу проверить работу справочников.
 INSERT IGNORE INTO destinations
     (destination_id, destination_name, country_name, rare_phenomenon, best_season,
      latitude, longitude, risk_level, is_active)
@@ -168,7 +167,7 @@ VALUES
     (9, 'Арина Сокол', '1988-05-09', '+7 900 119-20-30', 'arina.sokol@example.com', '40 7700881', 'Вера Сокол +7 900 209-90-90', 'PATHFINDER'),
     (10, 'Глеб Романов', '1996-10-14', '+7 900 120-20-30', 'gleb.romanov@example.com', '50 1010101', 'Ирина Романова +7 900 210-10-10', 'EXPLORER');
 
--- Демонстрационные заказы: таблица переменной информации.
+-- Добавляем несколько заказов, чтобы проверить связи, расчёты и отчёты.
 INSERT IGNORE INTO tour_orders
     (order_id, booking_code, traveler_id, destination_id, theme_id,
      service_package_id, order_date, start_date, participants_count,
@@ -190,7 +189,7 @@ VALUES
     (13, 'VOL26I013', 6, 3, 3, 4, '2026-07-18', '2026-10-06', 1, 218000.00, 89000.00, 15.00, 'CANCELLED', 'Защитная маска для фумарол'),
     (14, 'CAP27T014', 2, 8, 6, 3, '2026-08-01', '2027-05-12', 2, 110000.00, 52000.00, 10.00, 'PAID', 'Фотогид на рассвете');
 
--- Представление для готового отчёта по заказам.
+-- Собираем связанные данные в один удобный список заказов.
 CREATE OR REPLACE VIEW v_tour_orders AS
 SELECT
     o.booking_code,
@@ -211,7 +210,7 @@ JOIN destinations AS d ON d.destination_id = o.destination_id
 JOIN tour_themes AS th ON th.theme_id = o.theme_id
 JOIN service_packages AS sp ON sp.service_package_id = o.service_package_id;
 
--- Примеры контрольных запросов.
+-- Эти запросы помогают быстро убедиться, что данные загрузились правильно.
 SELECT * FROM v_tour_orders ORDER BY start_date;
 
 SELECT
